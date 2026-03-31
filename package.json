@@ -1,0 +1,26 @@
+{
+  "name": "signature-taker",
+  "version": "1.0.0",
+  "description": "A web app to capture, generate, and store user signatures",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js --exec babel-node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/node": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "dotenv": "^17.3.1",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-async-wrapper": "^0.1.0",
+    "express-joi-validation": "^6.1.0",
+    "joi": "^18.1.2",
+    "mysql2": "^3.20.0",
+    "nodemon": "^3.1.14",
+    "sequelize": "^6.37.8"
+  }
+}

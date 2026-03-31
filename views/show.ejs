@@ -1,0 +1,81 @@
+<%- include('partials/head') %>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/">Signature Taker</a>
+    <div>
+      <a href="/" class="btn btn-outline-light btn-sm me-2">New Signature</a>
+      <a href="/signatures" class="btn btn-outline-light btn-sm">All Signatures</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Signature Detail</h4>
+          <% if (signature.status === SIGNATURE_STATUS.ACTIVE) { %>
+            <span class="badge bg-success">Active</span>
+          <% } else { %>
+            <span class="badge bg-danger">Revoked</span>
+          <% } %>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <div class="signature-display">
+              <img
+                src="<%= signature.signature_data %>"
+                alt="Signature of <%= signature.signer_name %>"
+                class="img-fluid"
+              />
+            </div>
+          </div>
+
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th width="30%">Signer Name</th>
+                <td><%= signature.signer_name %></td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td><%= signature.signer_email || '-' %></td>
+              </tr>
+              <tr>
+                <th>IP Address</th>
+                <td><%= signature.ip_address || '-' %></td>
+              </tr>
+              <tr>
+                <th>Created At</th>
+                <td><%= new Date(signature.created_at).toLocaleString() %></td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td><%= SIGNATURE_STATUS_LABEL[signature.status] %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex gap-2">
+            <a
+              href="<%= signature.signature_data %>"
+              download="signature-<%= signature.signer_name.replace(/\s+/g, '-').toLowerCase() %>.png"
+              class="btn btn-outline-primary"
+            >Download PNG</a>
+            <a href="/signatures" class="btn btn-outline-secondary">Back to List</a>
+            <% if (signature.status === SIGNATURE_STATUS.ACTIVE) { %>
+              <form action="/signatures/<%= signature.id %>/delete" method="POST" class="ms-auto"
+                onsubmit="return confirm('Are you sure you want to revoke this signature?')">
+                <button type="submit" class="btn btn-danger">Revoke</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/scripts') %>

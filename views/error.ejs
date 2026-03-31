@@ -1,0 +1,15 @@
+<%- include('partials/head') %>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/">Signature Taker</a>
+  </div>
+</nav>
+
+<div class="container text-center mt-5">
+  <h1 class="display-1 text-danger"><%= statusCode || 500 %></h1>
+  <h3><%= message || 'Something went wrong' %></h3>
+  <a href="/" class="btn btn-primary mt-3">Go Home</a>
+</div>
+
+<%- include('partials/scripts') %>

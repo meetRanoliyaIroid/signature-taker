@@ -1,0 +1,67 @@
+<%- include('partials/head') %>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/">Signature Taker</a>
+    <a href="/" class="btn btn-outline-light btn-sm">New Signature</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h3 class="mb-4">All Signatures (<%= signatures.length %>)</h3>
+
+  <% if (signatures.length === 0) { %>
+    <div class="alert alert-info">No signatures yet. <a href="/">Create one</a>.</div>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Signer Name</th>
+            <th>Email</th>
+            <th>Preview</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% signatures.forEach((sig, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= sig.signer_name %></td>
+              <td><%= sig.signer_email || '-' %></td>
+              <td>
+                <img
+                  src="<%= sig.signature_data %>"
+                  alt="Signature"
+                  class="signature-thumbnail"
+                />
+              </td>
+              <td><%= new Date(sig.created_at).toLocaleString() %></td>
+              <td>
+                <% if (sig.status === SIGNATURE_STATUS.ACTIVE) { %>
+                  <span class="badge bg-success">Active</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Revoked</span>
+                <% } %>
+              </td>
+              <td>
+                <a href="/signatures/<%= sig.id %>" class="btn btn-sm btn-primary">View</a>
+                <% if (sig.status === SIGNATURE_STATUS.ACTIVE) { %>
+                  <form action="/signatures/<%= sig.id %>/delete" method="POST" class="d-inline"
+                    onsubmit="return confirm('Are you sure you want to revoke this signature?')">
+                    <button type="submit" class="btn btn-sm btn-danger">Revoke</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/scripts') %>

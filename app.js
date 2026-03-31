@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
+import http from "http";
 
 dotenv.config();
 
@@ -31,14 +32,33 @@ app.use("/", router);
 // Error handler
 app.use(errorHandler);
 
+const server = http.Server(app);
+
 // Database sync & server start
 db.sequelize
   .sync({ alter: true })
   .then(() => {
-    console.log("Database synced successfully");
-    app.listen(PORT, () => {
-      console.log(`Server running at http://${HOST}:${PORT}`);
-    });
+    if (process.env.IS_SECURE == "true") {
+      var options = {
+        key: fs.readFileSync(`${process.env.SSL_CERT_BASE_PATH}/privkey.pem`),
+        cert: fs.readFileSync(`${process.env.SSL_CERT_BASE_PATH}/cert.pem`),
+        ca: [
+          fs.readFileSync(`${process.env.SSL_CERT_BASE_PATH}/cert.pem`),
+          fs.readFileSync(`${process.env.SSL_CERT_BASE_PATH}/fullchain.pem`),
+        ],
+      };
+      var https = require("https").Server(options, app);
+  
+      https.listen(PORT, () => {
+        console.log(
+          `Https server is running on https://${process.env.HOST}:${PORT}`
+        );
+      });
+    } else {
+      server.listen(PORT, () => {
+        console.log(`Your application is running on ${PORT}`);
+      });
+    }
   })
   .catch((err) => {
     console.error("Failed to sync database:", err.message);

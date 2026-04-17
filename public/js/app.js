@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!canvas) return;
 
   const signaturePad = new SignaturePad(canvas, {
-    backgroundColor: "rgb(255, 255, 255)",
+    backgroundColor: "rgba(0, 0, 0, 0)",
     penColor: "rgb(0, 0, 0)",
   });
 

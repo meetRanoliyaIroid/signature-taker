@@ -1,0 +1,44 @@
+<%- include('../partials/head') %>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/">Signature Taker</a>
+    <div>
+      <a href="/" class="btn btn-outline-light btn-sm me-2">New Signature</a>
+      <a href="/signatures" class="btn btn-outline-light btn-sm">All Signatures</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Upload PDF for Signing</h4>
+        </div>
+        <div class="card-body">
+          <form action="/pdf/upload" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="pdf-file" class="form-label">Select PDF File</label>
+              <input
+                type="file"
+                class="form-control"
+                id="pdf-file"
+                name="pdf"
+                accept="application/pdf"
+                required
+              />
+              <div class="form-text">Max file size: 20MB</div>
+            </div>
+            <button type="submit" class="btn btn-success w-100">
+              Upload & Open Editor
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/scripts') %>

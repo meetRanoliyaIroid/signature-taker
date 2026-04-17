@@ -6,6 +6,13 @@ body {
   border: 2px dashed #ccc;
   border-radius: 8px;
   background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+    linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
   position: relative;
 }
 
@@ -24,6 +31,13 @@ body {
   border: 1px solid #dee2e6;
   border-radius: 4px;
   background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #e8e8e8 25%, transparent 25%),
+    linear-gradient(-45deg, #e8e8e8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e8e8e8 75%),
+    linear-gradient(-45deg, transparent 75%, #e8e8e8 75%);
+  background-size: 10px 10px;
+  background-position: 0 0, 0 5px, 5px -5px, -5px 0;
   padding: 2px;
 }
 
